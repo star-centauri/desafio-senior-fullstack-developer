@@ -5,13 +5,16 @@ FROM python:3.9
 WORKDIR /app
 
 # movimentação dos arquivos de instalação de depencias 
-COPY ./requirements.txt /code/requirements.txt
+COPY ./requirements.txt .
 
 # Instalação das dependencias
-RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
+RUN pip install --upgrade pip && pip install -r requirements.txt
 
 # Movimentação do restante do codigo
 COPY . .
 
+# Expõe a porta
+EXPOSE 8000
+
 # Execução da API
-CMD ["fastapi", "run", "main.py", "--port", "80"]
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]

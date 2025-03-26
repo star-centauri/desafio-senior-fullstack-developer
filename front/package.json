@@ -9,6 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@amcharts/amcharts5": "^5.11.2",
+    "@amcharts/amcharts5-fonts": "^5.0.1",
+    "@amcharts/amcharts5-geodata": "^5.1.4",
     "axios": "^1.8.4",
     "next": "15.2.4",
     "react": "^19.0.0",

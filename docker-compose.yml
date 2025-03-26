@@ -1,7 +1,7 @@
 services:
   front:
     build: ./front
-    container_name: front_container
+    container_name: front_rio
     ports:
       - "3000:3000"
     depends_on:
@@ -11,17 +11,18 @@ services:
 
   back:
     build: ./back
-    container_name: back_container
+    container_name: back_rio
     ports:
       - "8000:8000"
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     environment:
       - DATABASE_URL=postgresql://user:2025@db:5432/db_infra_rio
 
   db:
-    image: postgres:lts-alpine
-    container_name: db_container
+    image: postgres
+    container_name: db_rio
     environment:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: 2025
@@ -30,6 +31,11 @@ services:
       - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "user"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
 volumes:
   pgdata:

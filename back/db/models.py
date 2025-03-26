@@ -1,6 +1,6 @@
-from sqlalchemy import Column, Integer, String, Text, ForeignKey, LargeBinary
+from sqlalchemy import Column, Integer, String, Text, ForeignKey, LargeBinary, DateTime
 from sqlalchemy.orm import relationship
-from back.db.config import Base
+from db.config import Base
 
 class Status(Base):
     __tablename__ = "tb_status"
@@ -22,6 +22,7 @@ class Solicitacao(Base):
     id = Column(Integer, primary_key=True, index=True)
     title = Column(String, nullable=False)
     describe = Column(Text, nullable=False)
+    data_create = Column(DateTime, nullable=False)
 
     # Relacionamento com a tabela categoria
     category_id = Column(Integer, ForeignKey("tb_categoria.id"), nullable=False)
@@ -36,4 +37,4 @@ class Solicitacao(Base):
     status = relationship("Status")
 
     # Armazenamento de imagem
-    photo = Column(LargeBinary)
+    photo = Column(LargeBinary, nullable=True)
